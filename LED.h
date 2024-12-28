@@ -61,7 +61,7 @@ class LED
         void clean(void);
 
         /**
-         * @brief Blink the LED in blocking mode process.
+         * @brief Blink the LED.
          * @param period: is the period time for toggle LED.
          * @param number: is the number of toggling.
          * @param blockingMode: is the blink mode for blocking mode enable/disable. Default value is true that means blinking is in blocking mode.
@@ -101,6 +101,8 @@ class LED
             /// @brief Active mode of led control. 0: Active low, 1: Active high.
             uint8_t ACTIVE_MODE;
         }parameters;
+
+        /// @brief The time update for led blinking in non blocking mode.
         uint32_t _T;
 
         /// @brief GPIO_PinState value for LED turn on state.
