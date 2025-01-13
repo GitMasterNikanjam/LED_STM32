@@ -80,6 +80,8 @@ void LED::clean(void)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(parameters.GPIO_PORT, &GPIO_InitStruct);
+
+    _initFlag = false;
 }
 
 void LED::blink(uint16_t duration, uint8_t number, bool blockingMode)
