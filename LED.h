@@ -1,11 +1,25 @@
 #pragma once
 
 // ##############################################################################################
+// MCU Select:
+
+#include "mcu_select.h"
+
+/*
+    If there is not exist mcu_select.h at beside of this header file, Create it and put this bellow following content. 
+    Then select your desired MCU that want work with.
+*/
+// ----------------------------------------------------------------
+// mcu_select.h file:
+
 // Define the target MCU family here
+// Uncomment the desired MCU family definition below:
 
 // #define STM32F1
-#define STM32F4
+// #define STM32F4
 // #define STM32H7
+
+// ----------------------------------------------------------------
 
 // ##############################################################################################
 // Include libraries:
@@ -62,15 +76,15 @@ class LED
 
         /**
          * @brief Blink the LED.
-         * @param period: is the period time for toggle LED.
-         * @param number: is the number of toggling.
+         * @param duration: is the total duration time for toggle LED. [ms]
+         * @param number: is the number of toggling in certain duration time.
          * @param blockingMode: is the blink mode for blocking mode enable/disable. Default value is true that means blinking is in blocking mode.
-         * @note - Total time duration for toggle operation is: (period * number)
+         * @note - Total time duration for toggle operation is: (duration)
          */
-        void blink(uint16_t period, uint8_t number, bool blockingMode = true);
+        void blink(uint16_t duration, uint8_t number, bool blockingMode = true);
 
         /**
-         * @brief Return blinking status in non blocking mode.
+         * @brief Return blinking status for non blocking mode.
          * @return - true if blinking proccess is not finished.
          * @return - false if blinking proccess is finished.
          *  */ 
@@ -78,6 +92,7 @@ class LED
 
         /**
          * @brief Update blinking status in non blocking mode.
+         * @note - This method should be used in the main loop or in a periodic function.
          */
         void blinkUpdate(void);
 
@@ -117,11 +132,20 @@ class LED
         /// @brief The flag for blink led state in non blocking mode.
         bool _blinkFlag;
 
-        /// @brief The period of time for one blink led in non blocking mode.
-        uint16_t _blinkPeriod;
+        /// @brief The delay of time for one blink led in non blocking mode. [ms]
+        uint16_t _blinkDelay;
 
         /// @brief The number of blink led in non blocking mode.
         uint8_t _blinkNumber;
+
+        /// @brief The flag for LED.init() is succeeded or not.
+        bool _initFlag;
+
+        /**
+         * @brief Enable RCC GPIO PORT for certain port.
+         * @return true if successful.
+         */
+        bool RCC_GPIO_CLK_ENABLE(GPIO_TypeDef *GPIO_PORT);
 };
 
 
